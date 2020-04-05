@@ -79,6 +79,15 @@ export class DataService {
       });
     }
 
+    if (filters.selectedTypes && filters.selectedTypes.length > 0) {
+      filters.selectedTypes.forEach((type: string) => {
+        filteredData = _.concat(
+          filteredData,
+          _.filter(this.serverData, (data: any) => data.brewery_type === type)
+        );
+      });
+    }
+
     console.log("Filtered data: ", filteredData)
     this.subject.next(_.cloneDeep(filteredData));
   }
