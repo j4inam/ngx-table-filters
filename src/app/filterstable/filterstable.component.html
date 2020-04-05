@@ -1,0 +1,110 @@
+<mat-form-field>
+  <mat-label>Search</mat-label>
+  <input matInput placeholder="Search..." [formControl]="searchInput" (keyup)="applySearchFilter($event)" (focus)="resetFilter()">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource">
+  <form [formGroup]="searchFormGroup">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>
+       Store ID
+      </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field>
+          <mat-select formControlName="selectedNames" placeholder="Name" multiple
+            (openedChange)="updateFilters($event)">
+            <mat-option>
+              <ngx-mat-select-search formControlName="nameSearchInput" placeholderLabel="Name"
+                noEntriesFoundLabel="No matching Names found"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let name of names" [value]="name">
+              {{ name | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </th>
+      <td mat-cell *matCellDef="let row"> {{row.name | titlecase}} </td>
+    </ng-container>
+
+    <!-- State Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field>
+          <mat-select formControlName="selectedStates" placeholder="State" multiple
+            (openedChange)="updateFilters($event)">
+            <mat-option>
+              <ngx-mat-select-search formControlName="stateSearchInput" placeholderLabel="State"
+                noEntriesFoundLabel="No matching States found">
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let state of states" [value]="state">
+              {{ state | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </th>
+      <td mat-cell *matCellDef="let row"> {{row.state | titlecase }} </td>
+    </ng-container>
+
+    <!-- City Column -->
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field>
+          <mat-select formControlName="selectedCities" placeholder="City" multiple
+            (openedChange)="updateFilters($event)">
+            <mat-option>
+              <ngx-mat-select-search formControlName="citySearchInput" placeholderLabel="City"
+                noEntriesFoundLabel="No matching Cities found">
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let city of cities" [value]="city">
+              {{ city | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </th>
+      <td mat-cell *matCellDef="let row"> {{row.city}} </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-form-field>
+          <mat-select formControlName="selectedTypes" placeholder="Type" multiple
+            (openedChange)="updateFilters($event)">
+            <mat-option>
+              <ngx-mat-select-search formControlName="typeSearchInput" placeholderLabel="Type"
+                noEntriesFoundLabel="No matching Types found">
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let type of types" [value]="type">
+              {{ type | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </th>
+      <td mat-cell *matCellDef="let row"> {{row.brewery_type | uppercase}} </td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>
+        <button mat-raised-button color="warn" (click)="resetFilter()">Reset</button>
+      </th>
+      <td mat-cell *matCellDef="let row"></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </form>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
