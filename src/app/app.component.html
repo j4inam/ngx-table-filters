@@ -1,9 +1,10 @@
 <mat-toolbar color="warn">
-  <mat-toolbar-row>
+  <mat-toolbar-row class="navbar">
     <span>Filters Demo</span>
-    <span href="https://github.com/j4inam/ngx-table-filters" target="_blank" class="pointer">
-      Visit Github<mat-icon>code</mat-icon>
-    </span>
+    <a href="https://github.com/j4inam/ngx-table-filters" target="_blank" class="pointer">
+      <span class="github-link">Github</span>
+    </a>
   </mat-toolbar-row>
 </mat-toolbar>
-<filterstable [data]="data$ | async" (filterChanged)="filterChanged($event)" (filterReset)="resetFilters()"></filterstable>
+<filterstable [data]="data$ | async" (filterChanged)="filterChanged($event)" (filterReset)="resetFilters()">
+</filterstable>
